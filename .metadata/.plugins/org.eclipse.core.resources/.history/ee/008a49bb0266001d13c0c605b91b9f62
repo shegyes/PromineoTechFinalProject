@@ -1,0 +1,37 @@
+package com.promineotech.courses.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
+
+import lombok.Data;
+
+@Data
+@Entity
+
+//if the table below does not work recheck the name. The table in Dbeaver is students..
+@Table(name="graduation")
+public class Graduation {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int graduation_id;
+	
+	@Column(value="student_id")
+	private int student_id;
+	
+	@Column(value="graduation_date")
+	private String graduation_date;
+
+	public Object getTitle() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	
+}

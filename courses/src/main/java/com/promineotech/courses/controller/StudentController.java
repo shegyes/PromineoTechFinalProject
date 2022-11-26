@@ -1,0 +1,70 @@
+package com.promineotech.courses.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.promineotech.courses.entity.Student;
+import com.promineotech.courses.service.StudentService;
+
+
+@RestController
+@RequestMapping("/courses/student")
+
+public class StudentController {
+
+	
+	@Autowired
+private StudentService studentService;
+	
+	
+	
+	public StudentController(StudentService studentService) {
+		super();
+		this.studentService = studentService;
+	}
+	
+	
+	//create Student API
+	@PostMapping()
+	public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
+		return new ResponseEntity<Student>(studentService.saveStudent(student), HttpStatus.CREATED);
+	}
+	
+	//Read all mapping
+	@GetMapping
+	public List<Student> getAllStudents() {
+		return studentService.getAllStudents();
+	}
+	
+	//Read by ID
+	@GetMapping("{student_id}")
+	public ResponseEntity<Student> getStudentById(@PathVariable("student_id") int studentId) {
+		return new ResponseEntity<Student>(studentService.getStudentById(studentId), HttpStatus.OK);
+	}
+	
+	//UPDATE student
+	@PutMapping("{student_id}")
+	public ResponseEntity<Student> updateStudent(@PathVariable("student_id") int studentId, @RequestBody Student student) {
+		return new ResponseEntity<Student>(studentService.updateStudent(student, studentId), HttpStatus.OK);
+	}
+	
+		
+	//DELETE Student
+	@DeleteMapping("{student_id}")
+	public ResponseEntity<String> deleteStudent(@PathVariable("student_id") int studentId) {
+		studentService.deleteStudent(studentId);
+		return new ResponseEntity<String>("That Student has been deleted.", HttpStatus.OK);
+	}
+	
+}
